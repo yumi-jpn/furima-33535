@@ -49,15 +49,15 @@
 
 ## buyersテーブル
 
-|Column          |Type      |Options      |
-|----------------|----------|-------------|
-| postal_code    | string   | null: false |
-| prefectures_id | integer  | null: false |
-| municipalities | string   | null: false |
-| address        | string   | null: false |
-| building       | string   |             |
-| phone_number   | string   | null: false |
-| item_users     |references|             |
+|Column          |Type      |Options                         |
+|----------------|----------|--------------------------------|
+| postal_code    | string   | null: false                    |
+| prefectures_id | integer  | null: false                    |
+| municipalities | string   | null: false                    |
+| address        | string   | null: false                    |
+| building       | string   |                                |
+| phone_number   | string   | null: false                    |
+| item_users     |references| null: false, foreign_key: true |
 
 ### Association
 - belongs_to :item_user
