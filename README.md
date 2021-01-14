@@ -5,7 +5,7 @@
 |Column                |Type     |Options                   |
 |----------------------|---------|--------------------------|
 | nickname             | string  | null: false              |
-| e-mail               | string  | null: false, unique: true|
+| email               | string  | null: false, unique: true|
 | encrypted_password   | string  | null: false              |
 | last_name            | string  | null: false              |
 | first_name           | string  | null: false              |
@@ -49,14 +49,15 @@
 
 ## buyersテーブル
 
-|Column          |Type     |Options      |
-|----------------|---------|-------------|
-| postal_code    | string  | null: false |
-| prefectures_id | integer | null: false |
-| municipalities | string  | null: false |
-| address        | string  | null: false |
-| building       | string  |             |
-| phone_number   | string  | null: false |
+|Column          |Type      |Options      |
+|----------------|----------|-------------|
+| postal_code    | string   | null: false |
+| prefectures_id | integer  | null: false |
+| municipalities | string   | null: false |
+| address        | string   | null: false |
+| building       | string   |             |
+| phone_number   | string   | null: false |
+| item_users     |references|             |
 
 ### Association
 - belongs_to :item_user
