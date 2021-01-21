@@ -43,10 +43,10 @@ RSpec.describe Item, type: :model do
           @item.valid?
           expect(@item.errors.full_messages).to include('Ship method must be other than 1')
         end
-        it 'ship_area_idが0では登録できない' do
-          @item.ship_area_id = 0
+        it 'ship_area_idが1では登録できない' do
+          @item.ship_area_id = 1
           @item.valid?
-          expect(@item.errors.full_messages).to include('Ship area must be other than 0')
+          expect(@item.errors.full_messages).to include('Ship area must be other than 1')
         end
         it 'ship_date_idが1では登録できない' do
           @item.ship_date_id = 1
@@ -73,35 +73,10 @@ RSpec.describe Item, type: :model do
           @item.valid?
           expect(@item.errors.full_messages).to include('Price must be greater than or equal to 300')
         end
-        it 'priceが¥9,9999,999以上だと登録できない' do
+        it 'priceが¥9,999,999以上だと登録できない' do
           @item.price = '100000000'
           @item.valid?
           expect(@item.errors.full_messages).to include('Price must be less than or equal to 9999999')
-        end
-        it 'category_idが1の時は登録できない' do
-          @item.category_id = '1'
-          @item.valid?
-          expect(@item.errors.full_messages).to include('Category must be other than 1')
-        end
-        it 'state_idが1の時は登録できない' do
-          @item.state_id = '1'
-          @item.valid?
-          expect(@item.errors.full_messages).to include('State must be other than 1')
-        end
-        it 'ship_method_idが1の時は登録できない' do
-          @item.ship_method_id = '1'
-          @item.valid?
-          expect(@item.errors.full_messages).to include('Ship method must be other than 1')
-        end
-        it 'ship_area_idが0の時は登録できない' do
-          @item.ship_area_id = '0'
-          @item.valid?
-          expect(@item.errors.full_messages).to include('Ship area must be other than 0')
-        end
-        it 'ship_date_idが1の時は登録できない' do
-          @item.ship_date_id = '1'
-          @item.valid?
-          expect(@item.errors.full_messages).to include('Ship date must be other than 1')
         end
       end
     end
