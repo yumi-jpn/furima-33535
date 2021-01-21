@@ -12,6 +12,7 @@ class Item < ApplicationRecord
     validates :image
     validates :item_name
     validates :explanation
+    validates :price, numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 }
   end
   
   with_options numericality: { other_than: 1 } do # ジャンルの選択が「---」の時は保存できないようにする
@@ -21,6 +22,4 @@ class Item < ApplicationRecord
     validates :ship_area_id
     validates :ship_date_id
   end
-
-  validates :price, presence:true, numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 }
 end
