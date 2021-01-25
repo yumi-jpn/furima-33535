@@ -1,6 +1,8 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :edit]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update]
   before_action :ensure_user, only: [:edit, :update]
+  before_action :item_paramas, only: [:show, :edit, :update]
+
 
   def index
     @items = Item.all.order(created_at: :desc)
@@ -20,16 +22,12 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id])
   end
 
   def edit
-    @item = Item.find(params[:id])
   end
 
   def update
-    @item = Item.find(params[:id])
-    @item.user_id == current_user.id
     if @item.update(item_params)
       redirect_to item_path(@item.id)
     else
@@ -37,7 +35,19 @@ class ItemsController < ApplicationController
     end
   end
 
+  # def destroy
+  #  if item = Item.find(params[:id])
+  #     item.user_id == current_user.id
+  #     item.destroy
+  #     redirect_to root_path
+  #  end
+  end
+
   private
+
+  def item_paramas
+    @item = Item.find(params[:id])
+  end
 
   def item_params
     params.require(:item).permit(:image, :item_name, :explanation, :category_id, :state_id, :ship_method_id, :ship_area_id,
@@ -45,8 +55,8 @@ class ItemsController < ApplicationController
   end
 
   def ensure_user
-    @items = current_user.items
-    @item = @items.find_by(id: params[:id])
-    redirect_to root_path unless @item
+    @item = Item.find(params[:id])
+    @items = @item.user_id == current_user.id
+    redirect_to  root_path unless @items
   end
 end
