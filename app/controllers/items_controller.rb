@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update]
-  before_action :ensure_user, only: [:edit, :update]
   before_action :item_paramas, only: [:show, :edit, :update]
+  before_action :ensure_user, only: [:edit, :update]
 
 
   def index
@@ -41,7 +41,7 @@ class ItemsController < ApplicationController
   #     item.destroy
   #     redirect_to root_path
   #  end
-  end
+  # end
 
   private
 
@@ -55,7 +55,6 @@ class ItemsController < ApplicationController
   end
 
   def ensure_user
-    @item = Item.find(params[:id])
     @items = @item.user_id == current_user.id
     redirect_to  root_path unless @items
   end
