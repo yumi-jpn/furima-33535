@@ -5,7 +5,7 @@ class ItemUsersController < ApplicationController
 
   def index
     @item_user_buyer = ItemUserBuyer.new
-    if @item.item_user.nil?
+    unless @item.item_user.nil? && current_user.id == @item.user.id
       render :index
     else
       redirect_to root_path
