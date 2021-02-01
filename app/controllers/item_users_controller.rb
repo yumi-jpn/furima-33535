@@ -13,7 +13,6 @@ class ItemUsersController < ApplicationController
   end
 
   def create
-    @item_user_buyer = ItemUserBuyer.new(buyer_params)
     if @item_user_buyer.valid?
       pay_item
       @item_user_buyer.save
@@ -21,6 +20,7 @@ class ItemUsersController < ApplicationController
     else
       render action: :index
     end
+    @item_user_buyer = ItemUserBuyer.new(buyer_params)
   end
 
   private
@@ -44,6 +44,6 @@ class ItemUsersController < ApplicationController
   end
 
   def seller_user
-    redirect_to root_path if current_user == @item_user_id
+    redirect_to root_path if current_user == @item_user_id || @item_user.present?
   end
 end
