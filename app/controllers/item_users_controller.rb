@@ -1,13 +1,12 @@
 class ItemUsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :seller_user, only: [:index]
   before_action :item_params, only: [:index, :create]
 
   def index
     @item_user_buyer = ItemUserBuyer.new
-    unless @item.item_user.nil? && current_user.id == @item.user.id
+    if @item.item_user.nil? && current_user.id != @item.user.id
       render :index
-    else
+    elsif current_user != @item.user.id
       redirect_to root_path
     end
   end
@@ -21,7 +20,6 @@ class ItemUsersController < ApplicationController
     else
       render action: :index
     end
-    
   end
 
   private
@@ -42,9 +40,5 @@ class ItemUsersController < ApplicationController
       card: buyer_params[:token],
       currency: 'jpy'
     )
-  end
-
-  def seller_user
-    redirect_to root_path if current_user == @item_user_id || @item_user.present?
   end
 end
