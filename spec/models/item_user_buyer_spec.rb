@@ -3,15 +3,27 @@ require 'rails_helper'
 RSpec.describe ItemUserBuyer, type: :model do
   describe '商品情報の登録' do
     before do
-      @item_user_buyer = FactoryBot.build(:item_user_buyer)
+      @user = FactoryBot.create(:user)
+      @item = FactoryBot.create(:item)
+      @item_user_buyer = FactoryBot.build(:item_user_buyer, user_id: @user.id, item_id: @item.id)
     end
 
-    it '全ての値が正しく入力されていなければ保存できる' do
+    it '全ての値が正しく入力されていれば保存できる' do
       expect(@item_user_buyer).to be_valid
     end
     it 'buildingはなくても登録ができる' do
       @item_user_buyer.building = nil
       expect(@item_user_buyer).to be_valid
+    end
+    it 'user_idが空だと登録できない' do
+      @item_user_buyer.user_id = nil
+      @item_user_buyer.valid?
+      expect(@item_user_buyer.errors.full_messages).to include("User can't be blank")
+    end
+    it 'item_idが空だと登録できない' do
+      @item_user_buyer.item_id = nil
+      @item_user_buyer.valid?
+      expect(@item_user_buyer.errors.full_messages).to include("Item can't be blank")
     end
     it 'postal_codeが空だと登録できない' do
       @item_user_buyer.postal_code = nil

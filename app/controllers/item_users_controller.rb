@@ -1,9 +1,9 @@
 class ItemUsersController < ApplicationController
   before_action :authenticate_user!
   before_action :seller_user, only: [:index]
+  before_action :item_params, only: [:index, :create]
 
   def index
-    @item = Item.find(params[:item_id])
     @item_user_buyer = ItemUserBuyer.new
     if @item.item_user.nil?
       render :index
@@ -13,7 +13,6 @@ class ItemUsersController < ApplicationController
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @item_user_buyer = ItemUserBuyer.new(buyer_params)
     if @item_user_buyer.valid?
       pay_item
@@ -26,9 +25,13 @@ class ItemUsersController < ApplicationController
 
   private
 
+  def item_params
+    @item = Item.find(params[:item_id])
+  end
+
   def buyer_params
     params.require(:item_user_buyer).permit(:postal_code, :ship_area_id, :municipalities,
-                                            :address, :building, :phone_number, :token).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
+                                            :address, :building, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
   end
 
   def pay_item

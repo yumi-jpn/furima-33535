@@ -4,5 +4,4 @@ Rails.application.routes.draw do
   resources :items do
     resources :item_users, only: [:index, :new, :create]
   end
-  resources :buyers, only: [:index, :new, :create]
 end

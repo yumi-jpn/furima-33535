@@ -10,14 +10,11 @@ class ItemUserBuyer
     validates :phone_number, numericality: { only_integer: true }
     validates :ship_area_id, numericality: { other_than: 1 }
     validates :token
+    validates :item_id
+    validates :user_id
   end
 
   def save
-    # # ユーザーの情報を保存し、「user」という変数に入れている
-    # user = User.create(nickname: nickname, email: email, encrypted_password: encrypted_password, last_name: last_name, first_name: first_name, last_name_kana: last_name_kana, first_name_kana: first_name_kana, birth_date: birth_date)
-    # # 商品の情報を保存し、「item」という変数に入れている
-    # item = Item.create(item_name: item_name, explanation: explanation, category_id: category_id, state_id: state_id, ship_method_id: ship_method_id, ship_area_id: ship_area_id, ship_date_id: ship_date_id, price: price, user_id: user.id)
-    # #購入情報(誰がいつどの商品の購入をしたか)の保存
     item_user = ItemUser.create(user_id: user_id, item_id: item_id)
     # 配送先・住所情報の保存
     Buyer.create(postal_code: postal_code, ship_area_id: ship_area_id, municipalities: municipalities, address: address,
